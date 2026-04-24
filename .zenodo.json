@@ -1,0 +1,35 @@
+{
+  "title": "StressNET: an adaptable deep-learning model for mechanical stress inference in tissues",
+  "description": "StressNET is an open-source Python library implementing the deep-learning architecture described in the associated research paper for inferring mechanical stress fields in biological tissues.",
+  "license": "bsd-3-clause",
+  "upload_type": "software",
+  "creators": [
+    {
+      "name": "Aldecoa Rodrigo, Nicolás",
+      "affiliation": "TBD",
+      "orcid": ""
+    },
+    {
+      "name": "...",
+      "affiliation": "",
+      "orcid": ""
+    }
+  ],
+  "keywords": [
+    "deep learning",
+    "mechanical stress",
+    "tissue mechanics",
+    "biophysics",
+    "computational biology",
+    "neural network"
+  ],
+  "related_identifiers": [
+    {
+      "scheme": "url",
+      "identifier": "https://github.com/nicolasaldecoa/StressNET",
+      "relation": "isSupplementTo"
+    }
+  ],
+  "access_right": "open",
+  "language": "eng"
+}

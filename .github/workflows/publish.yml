@@ -1,0 +1,69 @@
+# Publish wheels/sdist to PyPI when a GitHub Release is published.
+#
+# Prerequisites for maintainers (see README_MAINTAINERS.md):
+#   - PyPI project ``stressnet`` configured for Trusted Publishing (OIDC) from this repo.
+#   - GitHub Environment named ``pypi`` matching the ``environment: name: pypi`` block below.
+#   - Release tag must be semantic version with optional leading ``v`` (e.g. ``v0.1.0``);
+#     the workflow strips ``v`` and runs ``poetry version`` before ``poetry build``.
+#
+name: Publish to PyPI
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: read
+  # Required for PyPI Trusted Publishing (OIDC)
+  id-token: write
+
+jobs:
+  build:
+    name: Build distribution
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+        with:
+          version: latest
+
+      - name: Sync version from git tag
+        # Strip the leading "v" from the tag (v0.2.0 → 0.2.0) and update pyproject.toml
+        run: |
+          TAG="${GITHUB_REF_NAME#v}"
+          poetry version "$TAG"
+
+      - name: Build
+        run: poetry build
+
+      - name: Upload dist artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
+
+  publish-pypi:
+    name: Publish to PyPI
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: pypi
+      url: https://pypi.org/project/stressnet/
+
+    steps:
+      - name: Download dist artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+
+      - name: Publish to PyPI (Trusted Publishing / OIDC)
+        uses: pypa/gh-action-pypi-publish@release/v1

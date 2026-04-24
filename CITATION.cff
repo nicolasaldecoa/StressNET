@@ -1,0 +1,34 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it using the metadata below."
+type: software
+title: "StressNET: an adaptable deep-learning model for mechanical stress inference in tissues"
+version: 0.1.0
+date-released: 2026-04-12
+license: BSD-3-Clause
+repository-code: "https://github.com/nicolasaldecoa/StressNET"
+url: "https://github.com/nicolasaldecoa/StressNET"
+
+authors:
+  - family-names: Aldecoa Rodrigo
+    given-names: Nicolás
+    # orcid: "TBD"
+  - family-names: "..."
+    given-names: "..."
+
+keywords:
+  - deep learning
+  - mechanical stress
+  - tissue mechanics
+  - biophysics
+  - computational biology
+
+# Uncomment and fill in once the paper is published (no placeholder DOIs in published metadata):
+# preferred-citation:
+#   type: article
+#   title: "TBD"
+#   authors:
+#     - family-names: Aldecoa Rodrigo
+#       given-names: Nicolás
+#   journal: "TBD"
+#   year: TBD
+#   doi: "TBD"

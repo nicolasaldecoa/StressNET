@@ -138,6 +138,7 @@ celerybeat.pid
 .env
 .envrc
 .venv
+.tmp-wheel-test/
 env/
 venv/
 ENV/
@@ -205,3 +206,9 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+# Local example datasets (downloaded separately)
+/examples/example_data/finetuning/radial_1d_2d_inverted_9v/
+
+# Sphinx
+/docs/_build/
