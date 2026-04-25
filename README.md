@@ -3,7 +3,8 @@
 **StressNET: an adaptable deep-learning model for mechanical stress inference in tissues**
 
 [![CI](https://github.com/nicolasaldecoa/StressNET/actions/workflows/ci.yml/badge.svg)](https://github.com/nicolasaldecoa/StressNET/actions/workflows/ci.yml)
-[![Docs](https://github.com/nicolasaldecoa/StressNET/actions/workflows/docs.yml/badge.svg)](https://github.com/nicolasaldecoa/StressNET/actions/workflows/docs.yml)
+[![Documentation Status](https://readthedocs.org/projects/stressnet/badge/?version=stable)](https://stressnet.readthedocs.io/en/stable/)
+[![Docs build](https://github.com/nicolasaldecoa/StressNET/actions/workflows/docs.yml/badge.svg)](https://github.com/nicolasaldecoa/StressNET/actions/workflows/docs.yml)
 [![PyPI version](https://img.shields.io/pypi/v/stressnet.svg)](https://pypi.org/project/stressnet/)
 [![Python](https://img.shields.io/pypi/pyversions/stressnet.svg)](https://pypi.org/project/stressnet/)
 [![License](https://img.shields.io/badge/license-BSD--3--Clause-blue.svg)](LICENSE)
@@ -106,7 +107,7 @@ make check      # run lint, tests, and package build
 
 ## Documentation
 
-- **Read the Docs:** after maintainers create the RTD project, set the canonical URL in `pyproject.toml` and badges here (placeholder: `TBD_READTHEDOCS_URL`).
+- **Read the Docs (stable):** [https://stressnet.readthedocs.io/en/stable/](https://stressnet.readthedocs.io/en/stable/) (development: [latest](https://stressnet.readthedocs.io/en/latest/)).
 - **Local HTML build:**
 
 ```bash

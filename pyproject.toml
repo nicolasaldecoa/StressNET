@@ -7,14 +7,14 @@ license = "BSD-3-Clause"
 readme = "README.md"
 homepage = "https://github.com/nicolasaldecoa/StressNET"
 repository = "https://github.com/nicolasaldecoa/StressNET"
-documentation = "https://github.com/nicolasaldecoa/StressNET#readme"
+documentation = "https://stressnet.readthedocs.io/en/stable/"
 keywords = ["deep-learning", "mechanical-stress", "tissue", "biophysics", "inference"]
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Intended Audience :: Science/Research",
     "Topic :: Scientific/Engineering :: Bio-Informatics",
     "Topic :: Scientific/Engineering :: Artificial Intelligence",
-    "License :: OSI Approved :: BSD Software License",
+    'License :: OSI Approved :: BSD 3-Clause "New" or "Revised" License',
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.10",
     "Typing :: Typed",

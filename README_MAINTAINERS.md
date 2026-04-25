@@ -6,12 +6,15 @@ Do **not** invent DOIs, ORCIDs, affiliations, or author names. Replace every `TB
 
 ## Read the Docs
 
-1. Create a project at <https://readthedocs.org/> linked to this GitHub repository.
-2. Set the default branch and Python version to **3.10**. This matches the TensorFlow 2.8 pin in `pyproject.toml`.
-3. Confirm `.readthedocs.yaml` at the repository root is detected.
-4. After the first successful build, set the canonical documentation URL, often `https://<project-slug>.readthedocs.io/en/stable/`, in:
+The project is published at <https://stressnet.readthedocs.io/en/stable/> (development docs: <https://stressnet.readthedocs.io/en/latest/>).
+
+Ongoing maintainer steps:
+
+1. In Read the Docs, keep the default branch and Python version aligned with the TensorFlow 2.8 pin in `pyproject.toml` (currently **3.10**).
+2. Confirm new commits trigger successful builds. If a build fails, check `docs/requirements.txt` and `.readthedocs.yaml` against the failing log.
+3. If the canonical URL ever changes, update:
    - `pyproject.toml` under `[tool.poetry]` → `documentation`
-   - `README.md`, replacing `TBD_READTHEDOCS_URL` if still present
+   - `README.md` badges and documentation links
 
 ## Zenodo
 
@@ -60,7 +63,7 @@ Use this checklist before tagging the repository for the article companion relea
 - Keep the associated manuscript author list in `README.md` and the commented `preferred-citation` block in `CITATION.cff` aligned with the final paper.
 - Fill real affiliations and ORCIDs in `.zenodo.json` / `CITATION.cff` where available. Leave ORCID fields absent or empty rather than using fake values.
 - Add the article DOI to `CITATION.cff` as `preferred-citation` and to Zenodo related identifiers once the DOI exists.
-- Create the Read the Docs project, confirm the first build, and replace `TBD_READTHEDOCS_URL` / package documentation URLs with the canonical RTD URL.
+- Confirm Read the Docs builds stay green; update documentation URLs in `pyproject.toml` and `README.md` if the canonical URL changes.
 - Confirm PyPI Trusted Publishing is configured for the `pypi` GitHub environment before publishing a release.
 - Run the full pytest suite with coverage locally and confirm CI is green on a pull request.
 - Re-run the example notebooks from a fresh clone / clean environment and confirm downloaded example data paths resolve.
