@@ -1,16 +1,20 @@
-# Publish wheels/sdist to PyPI when a GitHub Release is published.
+# Manually publish wheels/sdist to PyPI from an existing version tag.
 #
 # Prerequisites for maintainers (see README_MAINTAINERS.md):
 #   - PyPI project ``stressnet`` configured for Trusted Publishing (OIDC) from this repo.
 #   - GitHub Environment named ``pypi`` matching the ``environment: name: pypi`` block below.
-#   - Release tag must be semantic version with optional leading ``v`` (e.g. ``v0.1.0``);
+#   - Existing git tag must be semantic version with optional leading ``v`` (e.g. ``v0.1.0``);
 #     the workflow strips ``v`` and runs ``poetry version`` before ``poetry build``.
 #
 name: Publish to PyPI
 
 on:
-  release:
-    types: [published]
+  workflow_dispatch:
+    inputs:
+      version_tag:
+        description: "Existing git tag to publish (for example: v0.1.0)"
+        required: true
+        type: string
 
 permissions:
   contents: read
@@ -24,6 +28,17 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check out requested tag
+        run: |
+          TAG="${{ inputs.version_tag }}"
+          git rev-parse -q --verify "refs/tags/${TAG}" >/dev/null || {
+            echo "Tag '${TAG}' does not exist. Create and push the tag before publishing."
+            exit 1
+          }
+          git checkout "refs/tags/${TAG}"
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -38,7 +53,8 @@ jobs:
       - name: Sync version from git tag
         # Strip the leading "v" from the tag (v0.2.0 → 0.2.0) and update pyproject.toml
         run: |
-          TAG="${GITHUB_REF_NAME#v}"
+          TAG="${{ inputs.version_tag }}"
+          TAG="${TAG#v}"
           poetry version "$TAG"
 
       - name: Build

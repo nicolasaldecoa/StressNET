@@ -10,8 +10,8 @@ sys.path.insert(0, os.path.abspath('..'))
 
 # --- Project metadata -----------------------------------------------------
 project = 'StressNET'
-copyright = '2026, Nicolás Aldecoa Rodrigo and contributors'  # noqa: A001
-author = 'Nicolás Aldecoa Rodrigo, ...'
+copyright = '2026, Nicolás Aldecoa Rodrigo'  # noqa: A001
+author = 'Nicolás Aldecoa Rodrigo'
 
 release = '0.1.0'
 version = release

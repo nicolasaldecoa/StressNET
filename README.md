@@ -12,9 +12,18 @@
 
 ---
 
-## Overview
+## What is StressNET?
 
-StressNET is an open-source Python library implementing the deep-learning architecture for inferring mechanical stress fields in biological tissues.
+StressNET is an open-source Python library for data-driven mechanical stress inference in tissues. It implements Graph Neural Network models that infer intercellular stress from tissue geometry, without requiring users to specify a fixed physical model. The package includes pretrained models for stress prediction and utilities to finetune them on in silico and in vivo datasets.
+
+It can be used to:
+
+- preprocess Surface Evolver outputs or skeletonized microscopy images into graph data,
+- load pretrained or finetuned StressNET model weights,
+- infer stress/tension values on tissue interfaces,
+- compare StressNET predictions against ground truth or other method predictions when available,
+- plot inferred stresses back on a ForSys frame.
+
 
 ## Installation
 
@@ -35,6 +44,31 @@ import stressnet
 
 print(stressnet.__version__)
 ```
+
+From a repository checkout, run the test suite with:
+
+```bash
+poetry install --with dev
+poetry run pytest
+```
+
+Or, if `make` is available:
+
+```bash
+make install-dev
+make test
+```
+
+## Usage
+
+The recommended entry points are the worked example notebooks in `examples/`:
+
+- `examples/inference_in_silico.ipynb`: inference on synthetic Surface Evolver data.
+- `examples/inference_in_vivo.ipynb`: inference on experimental skeleton/myosin image data.
+- `examples/finetuning.ipynb`: finetuning a pre-trained StressNET model on user-provided graph data.
+
+These notebooks show the complete workflow, including data loading, model loading, inference, metrics, and plotting.
+
 ## AI assistants for users
 
 This repository includes `AGENTS.md`, a user-facing grounding document for AI assistants. It helps assistants write scripts or notebook cells that use StressNET to load data, run inference, compare metrics, and generate plots.
@@ -58,6 +92,18 @@ poetry install --with dev
 poetry run pytest
 ```
 
+Common development shortcuts are available through the `Makefile`:
+
+```bash
+make lint       # run Ruff checks like CI
+make lint-diff  # preview Ruff auto-fixes
+make lint-fix   # apply Ruff auto-fixes
+make test       # run pytest with coverage
+make docs       # build local HTML documentation
+make build      # build wheel and source distribution
+make check      # run lint, tests, and package build
+```
+
 ## Documentation
 
 - **Read the Docs:** after maintainers create the RTD project, set the canonical URL in `pyproject.toml` and badges here (placeholder: `TBD_READTHEDOCS_URL`).
@@ -66,6 +112,13 @@ poetry run pytest
 ```bash
 poetry install --with docs
 poetry run python docs/build_docs.py
+```
+
+Or, with `make`:
+
+```bash
+make install-docs
+make docs
 ```
 
 Open `docs/_build/html/index.html` in a browser. Maintainer-only release notes live in `README_MAINTAINERS.md`.
@@ -89,21 +142,26 @@ python examples/download_radial_1d_2d_inverted_9v.py
 
 You can also import `ensure_dataset_downloaded` from `examples/download_radial_1d_2d_inverted_9v.py` in a notebook.
 
-## Citation
+## How to cite
 
-If you use StressNET in your research, please cite:
+If you use the StressNET software, cite this repository/software package:
 
 ```bibtex
 @software{stressnet,
-  author  = {Aldecoa Rodrigo, Nicolás and ...},
+  author  = {Aldecoa Rodrigo, Nicolás},
   title   = {{StressNET}: an adaptable deep-learning model for mechanical stress inference in tissues},
   url     = {https://github.com/nicolasaldecoa/StressNET},
   license = {BSD-3-Clause},
 }
 ```
 
-> ⚠️ Once the paper is published, update `CITATION.cff` with the journal DOI and extend the BibTeX `author` list (replace `...` with additional authors).
+⚠️ Associated manuscript (unpublished, citation details to be updated after publication):
+
+> **StressNET: an adaptable deep-learning model for mechanical stress inference in tissues**
+> Nicolás Aldecoa Rodrigo, Augusto Borges, Jerónimo R. Miranda-Rodriguez, Guillherme Ventura, Jakub Sedzinski, Hernán López-Schier, Osvaldo Chara
+
+⚠️ Once the paper is published, update `CITATION.cff` and this section with the journal, year, and DOI.
 
 ## License
 
-[BSD 3-Clause](LICENSE) © Nicolás Aldecoa Rodrigo, ...
+[BSD 3-Clause](LICENSE) © Nicolás Aldecoa Rodrigo

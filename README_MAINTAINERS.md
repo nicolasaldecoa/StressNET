@@ -2,7 +2,7 @@
 
 This file is for repository maintainers preparing the publication companion release.
 
-Do **not** invent DOIs, ORCIDs, affiliations, or author names. Replace every `TBD` or `...` with real values when available, or remove placeholder entries before the public release.
+Do **not** invent DOIs, ORCIDs, affiliations, or author names. Replace every `TBD` with real values when available, or remove placeholder metadata before the public release.
 
 ## Read the Docs
 
@@ -17,12 +17,12 @@ Do **not** invent DOIs, ORCIDs, affiliations, or author names. Replace every `TB
 
 1. Enable the Zenodo-GitHub integration for this repository.
 2. On each **GitHub Release**, Zenodo creates an archive deposit. Review `.zenodo.json` metadata before or immediately after the first release.
-3. Replace empty strings and `"..."` placeholder creators in `.zenodo.json` with real names, affiliations, and ORCIDs.
+3. Fill the software creator affiliation and ORCID in `.zenodo.json` if desired.
 4. Add a related identifier for the peer-reviewed article (`scheme: "doi"`) when the paper DOI exists.
 
 ## Citation File
 
-1. Update `CITATION.cff` with the final software version, release date, authors, and author ORCIDs.
+1. Update `CITATION.cff` with the final software version, release date, software author ORCIDs, and any final software authorship changes.
 2. Uncomment and complete `preferred-citation` once the associated article is published.
 3. Do not publish `TBD` DOI, journal, or author values in active citation metadata.
 
@@ -46,7 +46,8 @@ If the dependency stack is upgraded, revisit both:
 
 Use this checklist before tagging the repository for the article companion release:
 
-- Replace all placeholder authors (`...`) with the final author/contributor list in `README.md`, `CITATION.cff`, `.zenodo.json`, `LICENSE`, and `docs/conf.py`.
+- Keep code/software authorship metadata (`pyproject.toml`, `LICENSE`, `stressnet/__init__.py`, `.zenodo.json`, `CITATION.cff` software authors) aligned with the final software authorship decision.
+- Keep the associated manuscript author list in `README.md` and the commented `preferred-citation` block in `CITATION.cff` aligned with the final paper.
 - Fill real affiliations and ORCIDs in `.zenodo.json` / `CITATION.cff` where available. Leave ORCID fields absent or empty rather than using fake values.
 - Add the article DOI to `CITATION.cff` as `preferred-citation` and to Zenodo related identifiers once the DOI exists.
 - Create the Read the Docs project, confirm the first build, and replace `TBD_READTHEDOCS_URL` / package documentation URLs with the canonical RTD URL.

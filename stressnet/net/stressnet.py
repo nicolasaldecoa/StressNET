@@ -1,19 +1,20 @@
 __all__ = ['get_model', 'build_stressnet']
 
-from tensorflow.keras.layers import Input, Dense, LayerNormalization, Activation
-from spektral.layers import GlobalAttnSumPool
 import tensorflow as tf
+from spektral.layers import GlobalAttnSumPool
+from tensorflow.keras.layers import Activation, Dense, Input, LayerNormalization
 from tensorflow.keras.models import Model
 from tensorflow.keras.regularizers import L2
-from .custom_layers import *
+
+from .custom_layers import ConcatBroadcast, NodeRescale, StressConv
 
 DEFAULT_DEVICE = '/GPU:0' if tf.config.list_physical_devices('GPU') else '/CPU:0'
 
 
 def get_model(weights_path,
-              points_per_edge: int = 9, 
-              disjoint_mode: bool = False, 
-              device: str | None = None, 
+              points_per_edge: int = 9,
+              disjoint_mode: bool = False,
+              device: str | None = None,
               **net_kwargs
               ) -> tf.keras.Model:
     """Build StressNET and optionally load weights on the chosen device.
@@ -105,15 +106,15 @@ def build_stressnet(load_weights_path: str | None = None,
 
     # expand
     e = Dense(EDGE_FEATURES_EXPAND, kernel_regularizer=EDGES_MLP_REG,
-              use_bias=not USE_LAYER_NORM, name=f'edge_feats_fc_1')(e0)
+              use_bias=not USE_LAYER_NORM, name='edge_feats_fc_1')(e0)
     if USE_LAYER_NORM:
-        e = LayerNormalization(name=f'edge_feats_ln_1')(e)
+        e = LayerNormalization(name='edge_feats_ln_1')(e)
     e = Activation(NON_LINEARITY, name=f'edge_feats_{NON_LINEARITY}_1')(e)
     # squeeze
     e = Dense(EDGE_FEATURES_SQUEEZE, kernel_regularizer=EDGES_MLP_REG,
-              use_bias=not USE_LAYER_NORM, name=f'edge_feats_fc_2')(e)
+              use_bias=not USE_LAYER_NORM, name='edge_feats_fc_2')(e)
     if USE_LAYER_NORM:
-        e = LayerNormalization(name=f'edge_feats_ln_2')(e)
+        e = LayerNormalization(name='edge_feats_ln_2')(e)
 
     # graph convolutions
     x = x0

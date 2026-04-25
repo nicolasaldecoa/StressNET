@@ -1,22 +1,23 @@
+import os
+import warnings
+from abc import ABC, abstractmethod
+from typing import Literal
+
+import numpy as np
+import pandas as pd
+import scipy.sparse as sp
+import tensorflow as tf
+from scipy.ndimage import zoom
+from spektral.utils import sp_matrix_to_sp_tensor
+
+from .io import load_graph_data
+
+warnings.simplefilter(action='ignore', category=FutureWarning)
+
 __all__ = ['split_data', 'load_npz_paths_from_logs', 'load_split_merge_from_logs', 'GraphDataGenerator',
            'rotate_2d_batch', 'get_logs_headers', 'ConnectedNodes', 'DisjointModeDataGenerator',
            'interpolate_vertices_fill_nans', 'resample_vertices', 'EdgeFeaturesRandomRotation',
            'EdgeFeaturesRandomJitter']
-
-import warnings
-
-warnings.simplefilter(action='ignore', category=FutureWarning)
-
-from .io import load_graph_data
-import numpy as np
-import pandas as pd
-import os
-import tensorflow as tf
-from spektral.utils import sp_matrix_to_sp_tensor
-import scipy.sparse as sp
-from scipy.ndimage import zoom
-from abc import ABC, abstractmethod
-from typing import Literal
 
 HEADERS_BASE = ('simulation', 'n_nodes', 'n_edges', 'total_time', 'load_time')
 HEADERS_FS = ('forsys_mae', 'forsys_mape', 'forsys_pred_time')
@@ -61,7 +62,7 @@ def load_npz_paths_from_logs(logs_csv_path: str):
 
 
 def split_data(dataset: pd.Series, val_split=0.1, test_split=0.2, subsample=1.0, seed=1337, as_datasources=True):
-    kwarg = dict(n=subsample) if (subsample > 1) else dict(frac=subsample)
+    kwarg = {'n': subsample} if (subsample > 1) else {'frac': subsample}
     ds = dataset.sample(**kwarg, random_state=seed)
     vs = len(ds) - test_split if (test_split > 1) else int((1 - test_split) * len(ds))
     ts = len(ds) - test_split - val_split if (val_split > 1) else int((1 - test_split - val_split) * len(ds))
@@ -309,7 +310,7 @@ class DisjointModeDataGenerator(GraphDataGenerator):
             # TODO: implement only_compute_loss_for in disjoint mode
             raise NotImplementedError('parameter `only_compute_loss_for` not supported in DisjointModeDataGenerator')
         self.batch_size = batch_size
-        super(DisjointModeDataGenerator, self).__init__(data_series, basedir, shuffle, e_augmentations,
+        super().__init__(data_series, basedir, shuffle, e_augmentations,
                                                         validate_all_nodes_in_graph, flatten_edge_feats,
                                                         only_compute_loss_for, rescale_y, random_seed)
 
@@ -321,7 +322,7 @@ class DisjointModeDataGenerator(GraphDataGenerator):
         start = index * self.batch_size
         end = start + self.batch_size
         graphs = [self._load_graph(idx) for idx in range(start, end)]
-        x_tup, a_tup, e_tup, y_tup = zip(*graphs)
+        x_tup, a_tup, e_tup, y_tup = zip(*graphs, strict=True)
         x, a, e, i, y = to_disjoint(x_tup, a_tup, e_tup, y_tup)
         a = sp_matrix_to_sp_tensor(a)
         return [x, a, e, i], y

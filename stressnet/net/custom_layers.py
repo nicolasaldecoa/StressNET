@@ -1,9 +1,9 @@
 __all__ = ['ConcatBroadcast', 'NodeRescale', 'StressConv']
 
 import tensorflow as tf
-from tensorflow.keras import backend as K
-from tensorflow.keras.layers import Dense, LayerNormalization, Activation, Layer
 from spektral.layers.convolutional.message_passing import MessagePassing
+from tensorflow.keras import backend as K
+from tensorflow.keras.layers import Activation, Dense, Layer, LayerNormalization
 
 
 class ConcatBroadcast(Layer):
@@ -132,15 +132,15 @@ class StressConv(MessagePassing):
 
     def build(self, input_shape):
         assert len(input_shape) >= 2
-        layer_kwargs = dict(
-            kernel_initializer=self.kernel_initializer,
-            bias_initializer=self.bias_initializer,
-            kernel_regularizer=self.kernel_regularizer,
-            bias_regularizer=self.bias_regularizer,
-            kernel_constraint=self.kernel_constraint,
-            bias_constraint=self.bias_constraint,
-            dtype=self.dtype,
-        )
+        layer_kwargs = {
+            'kernel_initializer': self.kernel_initializer,
+            'bias_initializer': self.bias_initializer,
+            'kernel_regularizer': self.kernel_regularizer,
+            'bias_regularizer': self.bias_regularizer,
+            'kernel_constraint': self.kernel_constraint,
+            'bias_constraint': self.bias_constraint,
+            'dtype': self.dtype,
+        }
         in_channels = input_shape[0][-1]
 
         use_bias = not self.use_layer_norm

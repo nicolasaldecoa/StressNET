@@ -7,13 +7,15 @@ to attach vector predictions to a ForSys :class:`~forsys.frames.Frame`.
 
 __all__ = ['predict', 'predict_augmented', 'frame_with_predicted_tensions', 'calculate_metrics']
 
-from .data_utils import randomly_rotate_edge_features
-import tensorflow as tf
-import numpy as np
-from spektral.utils.sparse import sp_matrix_to_sp_tensor
-from sklearn.metrics import r2_score, mean_absolute_percentage_error
-from typing import Dict, Any, Literal, TYPE_CHECKING
 from copy import deepcopy
+from typing import TYPE_CHECKING, Any, Literal
+
+import numpy as np
+import tensorflow as tf
+from sklearn.metrics import mean_absolute_percentage_error, r2_score
+from spektral.utils.sparse import sp_matrix_to_sp_tensor
+
+from .data_utils import randomly_rotate_edge_features
 
 if TYPE_CHECKING:
     from forsys.frames import Frame
@@ -22,7 +24,7 @@ DEFAULT_DEVICE = '/GPU:0' if tf.config.list_physical_devices('GPU') else '/CPU:0
 
 
 def predict(model: tf.keras.Model,
-            data: Dict[str, Any],
+            data: dict[str, Any],
             device: str | None = None
             ) -> np.ndarray:
     """Run a single forward pass and return flattened stress predictions.
@@ -49,7 +51,7 @@ def predict(model: tf.keras.Model,
 
 
 def predict_augmented(model: tf.keras.Model,
-                      data: Dict[str, Any],
+                      data: dict[str, Any],
                       n_augmentations: int = 9,
                       seed: int | None = 1337,
                       device: str | None = None,
@@ -137,7 +139,7 @@ def frame_with_predicted_tensions(frame: 'Frame',
         raise ValueError(
             f'Expected {len(big_edges)} tension values (one per big edge), got {tensions.size}.'
         )
-    for be, tension in zip(big_edges, tensions):
+    for be, tension in zip(big_edges, tensions, strict=True):
         for e_id in be.edges:
             new_frame.edges[e_id].tension = float(tension)
     return new_frame

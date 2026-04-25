@@ -2,19 +2,21 @@
 
 __all__ = ['se_output_to_graph', 'skeleton_to_graph']
 
-from .utils.data_utils import ConnectedNodes, resample_vertices
-from .utils.plotting import plot_with_force
-import forsys as fs
-import numpy as np
-from scipy.spatial.distance import euclidean as euclidean_dist
-from scipy.sparse import dok_matrix
+import random
 from collections import defaultdict
 from itertools import combinations
+from logging import getLogger
 from pathlib import Path
 from time import perf_counter
-from logging import getLogger
-import random
-from typing import Any, Dict, List
+from typing import Any
+
+import forsys as fs
+import numpy as np
+from scipy.sparse import dok_matrix
+from scipy.spatial.distance import euclidean as euclidean_dist
+
+from .utils.data_utils import ConnectedNodes, resample_vertices
+from .utils.plotting import plot_with_force
 
 StrPath = str | Path
 
@@ -25,7 +27,7 @@ NODE_FEATURES = ['arc_length', 'chord_length', 'cell1_area', 'cell2_area', 'cell
 
 def _get_neighboring_vertices(vertex: fs.vertex.Vertex,
                               lattice: fs.surface_evolver.SurfaceEvolver
-                              ) -> List[fs.vertex.Vertex]:
+                              ) -> list[fs.vertex.Vertex]:
     neighbors = []
     # loop over edges connected to this vertex
     for eid in vertex.ownEdges:
@@ -69,7 +71,7 @@ def _forsys_frame_to_graph(frame: fs.frames.Frame,
                            plots_prefix: str,
                            return_frame: bool,
                            verbose: bool
-                           ) -> Dict[str, Any]:
+                           ) -> dict[str, Any]:
     st = perf_counter()
 
     # optionally apply filter to remove noise
@@ -102,7 +104,7 @@ def _forsys_frame_to_graph(frame: fs.frames.Frame,
     forsys_preds = np.empty(n_big_edges, dtype=np.float32) if include_forsys_predictions else None
     # boolean array to tag specific big-edges
     tagged_nodes = np.empty(n_big_edges, dtype=np.bool) if tag_cell_interfaces else None
-    to_tag = set([tuple(sorted(cell_pair)) for cell_pair in tag_cell_interfaces]) if tag_cell_interfaces else None
+    to_tag = {tuple(sorted(cell_pair)) for cell_pair in tag_cell_interfaces} if tag_cell_interfaces else None
 
     bigi = 0
     for bigedge in frame.big_edges.values():
@@ -195,7 +197,7 @@ def _forsys_frame_to_graph(frame: fs.frames.Frame,
         bigi += 1
 
     # TODO: for sure there are more efficient ways to exclude disconnected nodes. This works for now.
-    adjacency = list()
+    adjacency = []
     connected_set = set()
     for i, j in combinations(range(n_big_edges), 2):
         intersect = adj_tracker[i].intersection(adj_tracker[j])
@@ -212,7 +214,7 @@ def _forsys_frame_to_graph(frame: fs.frames.Frame,
     adj_mat = dok_matrix((len(connected),) * 2, dtype=bool)
 
     # edge features (store node indices as they get added to the adj. mat. so we can use them to order edge feats later)
-    edge_index_buffer, edge_features_buffer = list(), list()
+    edge_index_buffer, edge_features_buffer = [], []
 
     # populate the adjacency matrix and edge features arrays
     for i, j in adjacency:
@@ -314,8 +316,8 @@ def _forsys_frame_to_graph(frame: fs.frames.Frame,
         assert forsys_preds_f.shape[0] == node_features.shape[0], 'Expecting n_forsys_preds to be equal to n_nodes'
         assert np.all(forsys_preds_f >= 0), f'Negative values in filtered forsys preds: {forsys_preds_f}'
         if np.any(forsys_preds_f == 0):
-            log.warning(f'Found zeros in ForSys predictions which will be ignored in mean normalization. '
-                        f'These values should be masked-out when calculating metrics to obtain accurate results.')
+            log.warning('Found zeros in ForSys predictions which will be ignored in mean normalization. '
+                        'These values should be masked-out when calculating metrics to obtain accurate results.')
         # re-normalize forsys predictions after removing disconnected nodes (make sure to ignore zeros in this step)
         out['forsys_preds'] = forsys_preds_f / forsys_preds_f[forsys_preds_f > 0].mean()
 
@@ -363,7 +365,7 @@ def se_output_to_graph(src_file: StrPath,
                        debug_plots_prefix: str | None = None,
                        return_frame: bool = False,
                        verbose: bool = True
-                       ) -> Dict[str, Any]:
+                       ) -> dict[str, Any]:
     """Load a Surface Evolver dump, build a ForSys frame, and return graph arrays.
 
     Parameters
@@ -449,7 +451,7 @@ def skeleton_to_graph(src_file: StrPath,
                       debug_plots_prefix: str | None = None,
                        return_frame: bool = False,
                        verbose: bool = True
-                       ) -> Dict[str, Any]:
+                       ) -> dict[str, Any]:
     """Load a skeleton ``.tif``, build a mesh in ForSys, optionally attach myosin GT, and return graph tensors.
 
     Parameters

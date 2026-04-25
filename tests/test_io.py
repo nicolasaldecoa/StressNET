@@ -1,6 +1,8 @@
 import logging
+
 import numpy as np
 from scipy.sparse import csr_matrix
+
 from stressnet.utils.io import load_graph_data, save_graph_data
 
 

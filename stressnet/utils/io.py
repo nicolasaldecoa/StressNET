@@ -1,16 +1,17 @@
 __all__ = ['save_graph_data', 'load_graph_data']
 
 import os
+from logging import getLogger
+
 import numpy as np
 from scipy.sparse import csr_matrix
-from logging import getLogger
 
 log = getLogger(__name__)
 
 
 def save_graph_data(dst_file: str,
                     *,
-                    adj_mat: csr_matrix, 
+                    adj_mat: csr_matrix,
                     node_features: np.ndarray,
                     edge_features: np.ndarray,
                     targets: np.ndarray | None = None,
@@ -118,6 +119,6 @@ def load_graph_data(file_path: str,
 
     if as_dict:
         graph_data_keys = ['a', 'x', 'e', 'y', 'forsys_preds']
-        return dict(zip(graph_data_keys, out))
+        return dict(zip(graph_data_keys, out, strict=False))
 
     return tuple(out)

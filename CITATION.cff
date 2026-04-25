@@ -12,8 +12,6 @@ authors:
   - family-names: Aldecoa Rodrigo
     given-names: Nicolás
     # orcid: "TBD"
-  - family-names: "..."
-    given-names: "..."
 
 keywords:
   - deep learning
@@ -25,10 +23,22 @@ keywords:
 # Uncomment and fill in once the paper is published (no placeholder DOIs in published metadata):
 # preferred-citation:
 #   type: article
-#   title: "TBD"
+#   title: "StressNET: an adaptable deep-learning model for mechanical stress inference in tissues"
 #   authors:
 #     - family-names: Aldecoa Rodrigo
 #       given-names: Nicolás
+#     - family-names: Borges
+#       given-names: Augusto
+#     - family-names: Miranda-Rodriguez
+#       given-names: Jerónimo R.
+#     - family-names: Ventura
+#       given-names: Guilherme
+#     - family-names: Sedzinski
+#       given-names: Jakub
+#     - family-names: López-Schier
+#       given-names: Hernán
+#     - family-names: Chara
+#       given-names: Osvaldo
 #   journal: "TBD"
 #   year: TBD
 #   doi: "TBD"

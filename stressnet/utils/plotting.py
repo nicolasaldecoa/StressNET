@@ -2,12 +2,13 @@
 
 __all__ = ['plot_with_force']
 
-import matplotlib
-from matplotlib import pyplot as plt
 import os
+from typing import TYPE_CHECKING, Literal
+
+import cmocean  # noqa: F401  # registers "cmo.*" colormaps with matplotlib
+import matplotlib
 import numpy as np
-import cmocean  # imports "cmo.*" colors in plt
-from typing import Optional, Literal, TYPE_CHECKING, Tuple
+from matplotlib import pyplot as plt
 
 if TYPE_CHECKING:
     from forsys.frames import Frame
@@ -17,7 +18,7 @@ DEFAULT_DISCRETE_CMAP = 'tab20'
 DEFAULT_CONTINUOUS_CMAP = 'cmo.matter'
 
 
-def _normalize_force_to_plot(force_to_plot: Optional[Literal['stress', 'tension', 'gt', 'ground-truth']]
+def _normalize_force_to_plot(force_to_plot: Literal['stress', 'tension', 'gt', 'ground-truth'] | None
                              ) -> Literal['stress', 'tension', 'gt', 'ground-truth']:
     if force_to_plot is None:
         return None
@@ -29,10 +30,10 @@ def _normalize_force_to_plot(force_to_plot: Optional[Literal['stress', 'tension'
 
 
 def plot_with_force(frame: 'Frame',
-                    filename: Optional[str] = None,
-                    force_to_plot: Optional[Literal['stress', 'tension', 'gt', 'ground-truth']] = None,
+                    filename: str | None = None,
+                    force_to_plot: Literal['stress', 'tension', 'gt', 'ground-truth'] | None = None,
                     mirror_y: bool = False,
-                    figsize: Tuple[float, float] = (10, 10),
+                    figsize: tuple[float, float] = (10, 10),
                     **kwargs
                     ) -> None:
     """Plot the tissue graph, optionally coloring edges by tension or ground truth.
@@ -98,7 +99,7 @@ def plot_with_force(frame: 'Frame',
 
     for eid, edge in frame.edges.items():
         if eid in external_edge_ids:
-            plot_kwargs = dict(color='black', linewidth=0.5, alpha=0.6)
+            plot_kwargs = {'color': 'black', 'linewidth': 0.5, 'alpha': 0.6}
         else:
             plot_kwargs = {
                 'color': _get_edge_color(edge),
@@ -117,7 +118,7 @@ def plot_with_force(frame: 'Frame',
     if kwargs.get('cbar') and cbar_norm is not None:
         sm = matplotlib.cm.ScalarMappable(cmap=colormap, norm=cbar_norm)
         sm.set_array([])
-        default_cbar_params = dict(pad=0.04, shrink=0.7, format='%.1f')
+        default_cbar_params = {'pad': 0.04, 'shrink': 0.7, 'format': '%.1f'}
         cbar_params = {**default_cbar_params, **kwargs.get('cbar_params', {})}
         cbar = plt.colorbar(sm, ax=ax, **cbar_params)
         ticks = np.arange(clean_vmin, clean_vmax + (cbar_step / 2), cbar_step)

@@ -18,8 +18,8 @@ from __future__ import annotations
 from pathlib import Path
 from typing import TYPE_CHECKING, Any
 
+from ._downloader import clear_cache, download_model, get_model_path
 from ._registry import list_models
-from ._downloader import download_model, get_model_path, clear_cache
 
 if TYPE_CHECKING:
     import tensorflow as tf
@@ -34,7 +34,7 @@ def load_model(
     force_download: bool = False,
     device: str | None = None,
     **net_kwargs: Any,
-) -> 'tf.keras.Model':
+) -> tf.keras.Model:
     """Download (if needed) and return a ready-to-use StressNET model.
 
     Parameters
@@ -54,8 +54,8 @@ def load_model(
     tf.keras.Model
         Compiled model with weights loaded, ready for inference.
     """
-    from ._registry import get_entry
     from ..net.stressnet import get_model
+    from ._registry import get_entry
 
     if name is None:
         name = DEFAULT_MODEL
