@@ -1,0 +1,9 @@
+# Read the Docs and local Sphinx builds (see pyproject.toml [tool.poetry.group.docs])
+sphinx>=7,<9
+sphinx-rtd-theme>=2,<4
+numpy==1.23.4
+pandas>=1.4,<3
+scipy>=1.8
+scikit-learn>=1.0
+gdown>=5.1
+platformdirs>=4.2

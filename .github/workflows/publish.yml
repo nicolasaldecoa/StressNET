@@ -1,0 +1,85 @@
+# Manually publish wheels/sdist to PyPI from an existing version tag.
+#
+# Prerequisites:
+#   - PyPI project ``stressnet`` configured for Trusted Publishing (OIDC) from this repo.
+#   - GitHub Environment named ``pypi`` matching the ``environment: name: pypi`` block below.
+#   - Existing git tag must be semantic version with optional leading ``v`` (e.g. ``v1.0.0``);
+#     the workflow strips ``v`` and runs ``poetry version`` before ``poetry build``.
+#
+name: Publish to PyPI
+
+on:
+  workflow_dispatch:
+    inputs:
+      version_tag:
+        description: "Existing git tag to publish (for example: v1.0.0)"
+        required: true
+        type: string
+
+permissions:
+  contents: read
+  # Required for PyPI Trusted Publishing (OIDC)
+  id-token: write
+
+jobs:
+  build:
+    name: Build distribution
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Check out requested tag
+        run: |
+          TAG="${{ inputs.version_tag }}"
+          git rev-parse -q --verify "refs/tags/${TAG}" >/dev/null || {
+            echo "Tag '${TAG}' does not exist. Create and push the tag before publishing."
+            exit 1
+          }
+          git checkout "refs/tags/${TAG}"
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.10"
+
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+        with:
+          version: latest
+
+      - name: Sync version from git tag
+        # Strip the leading "v" from the tag (v0.2.0 → 0.2.0) and update pyproject.toml
+        run: |
+          TAG="${{ inputs.version_tag }}"
+          TAG="${TAG#v}"
+          poetry version "$TAG"
+
+      - name: Build
+        run: poetry build
+
+      - name: Upload dist artifact
+        uses: actions/upload-artifact@v6
+        with:
+          name: dist
+          path: dist/
+
+  publish-pypi:
+    name: Publish to PyPI
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: pypi
+      url: https://pypi.org/project/stressnet/
+
+    steps:
+      - name: Download dist artifact
+        uses: actions/download-artifact@v6
+        with:
+          name: dist
+          path: dist/
+
+      - name: Publish to PyPI (Trusted Publishing / OIDC)
+        uses: pypa/gh-action-pypi-publish@release/v1

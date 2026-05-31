@@ -1,0 +1,118 @@
+name: CI
+
+# Skip runs for changes that cannot affect ruff, pytest, or `poetry build` (saves
+# time on doc-only and metadata PRs). Keep this list tight: do not ignore
+# `stressnet/**`, `tests/**`, `examples/*.py` (packaged examples + helpers under test),
+# `pyproject.toml`, `poetry.lock`, `Makefile`, or `pyproject`/`ruff`/`pytest` config.
+# See: https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#onpushpull_requestpull_request_targetpathspaths-ignore
+# workflow_dispatch: run manually (e.g. after doc-only changes) if you need a green run.
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths-ignore:
+      - "README.md"
+      - "AGENTS.md"
+      - "CLAUDE.md"
+      - "LICENSE"
+      - "CITATION.cff"
+      - ".zenodo.json"
+      - "docs/**"
+      - ".readthedocs.yaml"
+      - "examples/example_data/**"
+      - "examples/**/*.ipynb"
+      - ".github/workflows/docs.yml"
+      - ".github/workflows/publish.yml"
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize, reopened, ready_for_review]
+    paths-ignore:
+      - "README.md"
+      - "AGENTS.md"
+      - "CLAUDE.md"
+      - "LICENSE"
+      - "CITATION.cff"
+      - ".zenodo.json"
+      - "docs/**"
+      - ".readthedocs.yaml"
+      - "examples/example_data/**"
+      - "examples/**/*.ipynb"
+      - ".github/workflows/docs.yml"
+      - ".github/workflows/publish.yml"
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: Test (Python ${{ matrix.python-version }})
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        # TensorFlow 2.8 / NumPy pin in pyproject.toml: use 3.10 only until the stack is upgraded.
+        python-version: ["3.10"]
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v6
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: "pip"
+
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+        with:
+          version: latest
+          virtualenvs-create: true
+          virtualenvs-in-project: true
+
+      - name: Load cached venv
+        id: cached-poetry-deps
+        uses: actions/cache@v4
+        with:
+          path: .venv
+          key: venv-${{ runner.os }}-py${{ matrix.python-version }}-${{ hashFiles('**/poetry.lock') }}
+
+      - name: Select Poetry Python
+        run: poetry env use python
+
+      - name: Install dependencies
+        if: steps.cached-poetry-deps.outputs.cache-hit != 'true'
+        run: poetry install --no-interaction --with dev
+
+      - name: Lint with ruff
+        run: poetry run ruff check stressnet tests
+
+      - name: Run tests
+        run: poetry run pytest
+
+  # Ensure the package can be built cleanly
+  build:
+    name: Build distribution
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.10"
+
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+        with:
+          version: latest
+
+      - name: Build
+        run: poetry build
+
+      - name: Upload dist
+        uses: actions/upload-artifact@v6
+        with:
+          name: dist
+          path: dist/

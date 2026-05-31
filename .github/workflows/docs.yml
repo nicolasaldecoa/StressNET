@@ -1,0 +1,46 @@
+# Build Sphinx documentation on each push / PR (Python 3.10 matches package pin).
+# Run only when the HTML build can change. Avoid listing unrelated paths to prevent
+# false negatives (e.g. README is not a Sphinx source here; stressnet/ is autodoc).
+# See: https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#onpushpull_requestpull_request_targetpaths
+name: Docs
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "docs/**"
+      - "stressnet/**"
+      - ".readthedocs.yaml"
+      - ".github/workflows/docs.yml"
+  pull_request:
+    branches: [main]
+    paths:
+      - "docs/**"
+      - "stressnet/**"
+      - ".readthedocs.yaml"
+      - ".github/workflows/docs.yml"
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  sphinx:
+    name: Sphinx HTML
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.10"
+          cache: pip
+          cache-dependency-path: docs/requirements.txt
+
+      - name: Install doc dependencies
+        run: python -m pip install --upgrade pip -r docs/requirements.txt
+
+      - name: Build HTML
+        run: python docs/build_docs.py
