@@ -8,7 +8,7 @@
 [![PyPI version](https://img.shields.io/pypi/v/stressnet.svg)](https://pypi.org/project/stressnet/)
 [![Python 3.10](https://img.shields.io/badge/python-3.10-blue?logo=python&logoColor=ffd43b)](https://pypi.org/project/stressnet/)
 [![License](https://img.shields.io/badge/license-BSD--3--Clause-blue.svg)](LICENSE)
-[![DOI](https://zenodo.org/badge/nicolasaldecoa/StressNET.svg)](https://zenodo.org/badge/latestdoi/nicolasaldecoa/StressNET)
+[![DOI](https://zenodo.org/badge/1208779358.svg)](https://doi.org/10.5281/zenodo.20481460)
 
 ---
 
