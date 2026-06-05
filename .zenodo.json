@@ -1,13 +1,45 @@
 {
   "title": "StressNET: an adaptable deep-learning model for mechanical stress inference in tissues",
-  "description": "StressNET is an open-source Python library implementing the deep-learning architecture described in the associated research paper for inferring mechanical stress fields in biological tissues.",
+  "description": "StressNET is an open-source Python library implementing the deep-learning architecture described in the associated research article on mechanical stress inference in biological tissues. The software repository accompanies the associated research article and provides training, evaluation, and inference utilities.\n\nAssociated article authors:\nNicolás Aldecoa Rodrigo*, Augusto Borges*, Jerónimo R. Miranda-Rodriguez, Guillherme Ventura, Jakub Sedzinski, Hernán López-Schier, and Osvaldo Chara.\n\n*These authors contributed equally.",
   "license": "bsd-3-clause",
   "upload_type": "software",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "creators": [
     {
       "name": "Aldecoa Rodrigo, Nicolás",
       "affiliation": "Instituto de Tecnología, Universidad Argentina de la Empresa, Buenos Aires, Argentina"
+    }
+  ],
+  "contributors": [
+    {
+      "name": "Borges, Augusto",
+      "type": "Researcher",
+      "affiliation": "Department of Physiology, Development and Neuroscience, University of Cambridge, Cambridge, CB2, UK"
+    },
+    {
+      "name": "Miranda-Rodriguez, Jerónimo R.",
+      "type": "Researcher",
+      "affiliation": "Instituto de Neurobiología, Universidad Nacional Autónoma de México (UNAM), Boulevard Juriquilla 3001, Juriquilla, México"
+    },
+    {
+      "name": "Ventura, Guillherme",
+      "type": "Researcher",
+      "affiliation": "Research Institute for Molecular Pathology (IMP), Vienna, Austria"
+    },
+    {
+      "name": "Sedzinski, Jakub",
+      "type": "Researcher",
+      "affiliation": "The Novo Nordisk Foundation Center for Stem Cell Medicine (reNEW), University of Copenhagen, Blegdamsvej 3B, 2200 Copenhagen, Denmark; Department of Biomedical Sciences, University of Copenhagen, Copenhagen, Denmark"
+    },
+    {
+      "name": "López-Schier, Hernán",
+      "type": "Researcher",
+      "affiliation": "Division of Science, New York University Abu Dhabi, Saadiyat Island, United Arab Emirates"
+    },
+    {
+      "name": "Chara, Osvaldo",
+      "type": "Supervisor",
+      "affiliation": "School of Biosciences, University of Nottingham, Sutton Bonington Campus, Nottingham, LE12, UK; Instituto de Tecnología, Universidad Argentina de la Empresa, Buenos Aires, Argentina"
     }
   ],
   "keywords": [
@@ -22,7 +54,7 @@
     {
       "scheme": "url",
       "identifier": "https://github.com/nicolasaldecoa/StressNET",
-      "relation": "isSupplementTo"
+      "relation": "isIdenticalTo"
     }
   ],
   "access_right": "open",

@@ -13,7 +13,7 @@ project = 'StressNET'
 copyright = '2026, Nicolás Aldecoa Rodrigo'  # noqa: A001
 author = 'Nicolás Aldecoa Rodrigo'
 
-release = '1.0.0'
+release = '1.0.1'
 version = release
 
 # --- Extensions -----------------------------------------------------------

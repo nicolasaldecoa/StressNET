@@ -144,13 +144,20 @@ If you use the StressNET software, cite this repository/software package:
 @software{stressnet,
   author  = {Aldecoa Rodrigo, Nicolás},
   title   = {{StressNET}: an adaptable deep-learning model for mechanical stress inference in tissues},
-  version = {1.0.0},
+  version = {1.0.1},
   url     = {https://github.com/nicolasaldecoa/StressNET},
   license = {BSD-3-Clause},
 }
 ```
 
 Software citation metadata is also available in [`CITATION.cff`](CITATION.cff).
+
+The software accompanies the following research article (currently unpublished; a DOI will be added once available):
+
+> Aldecoa Rodrigo, N. *, Borges, A. *, Miranda-Rodriguez, J. R., Ventura, G., Sedzinski, J., López-Schier, H., & Chara, O.
+> *StressNET: an adaptable deep-learning model for mechanical stress inference in tissues.*
+>
+> *These authors contributed equally.
 
 ## License
 

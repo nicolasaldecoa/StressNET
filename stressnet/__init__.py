@@ -9,7 +9,7 @@ Author
 Nicolás Aldecoa Rodrigo.
 """
 
-__version__ = '1.0.0'
+__version__ = '1.0.1'
 __author__ = 'Nicolás Aldecoa Rodrigo'
 __license__ = 'BSD-3-Clause'
 
