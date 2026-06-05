@@ -1,13 +1,25 @@
 {
   "title": "StressNET: an adaptable deep-learning model for mechanical stress inference in tissues",
-  "description": "StressNET is an open-source Python library implementing the deep-learning architecture described in the associated research paper for inferring mechanical stress fields in biological tissues.",
+  "description": "<p>StressNET is an open-source Python library implementing the deep-learning architecture for inferring mechanical stress fields in biological tissues. It provides training, evaluation, and inference utilities. The software accompanies the associated research article:</p><p><strong>StressNET: an adaptable deep-learning model for mechanical stress inference in tissues</strong><br>Nicol\u00e1s Aldecoa Rodrigo<sup>1,*</sup>, Augusto Borges<sup>2,*</sup>, Jer\u00f3nimo R. Miranda-Rodriguez<sup>3</sup>, Guillherme Ventura<sup>4</sup>, Jakub Sedzinski<sup>5,6</sup>, Hern\u00e1n L\u00f3pez-Schier<sup>7</sup>, Osvaldo Chara<sup>8,9,10</sup></p><p>1) Instituto de Tecnolog\u00eda, Universidad Argentina de la Empresa, Buenos Aires, Argentina<br>2) Department of Physiology, Development and Neuroscience, University of Cambridge, Cambridge, CB2, UK<br>3) Instituto de Neurobiolog\u00eda, Universidad Nacional Aut\u00f3noma de M\u00e9xico (UNAM), Boulevard Juriquilla 3001, Juriquilla, M\u00e9xico<br>4) Research Institute for Molecular Pathology (IMP), Vienna, Austria<br>5) The Novo Nordisk Foundation Center for Stem Cell Medicine (reNEW), University of Copenhagen, Blegdamsvej 3B, 2200 Copenhagen, Denmark<br>6) Department of Biomedical Sciences, University of Copenhagen, Copenhagen, Denmark<br>7) Division of Science, New York University Abu Dhabi, Saadiyat Island, United Arab Emirates<br>8) School of Biosciences, University of Nottingham, Sutton Bonington Campus, Nottingham, LE12, UK<br>9) Instituto de Tecnolog\u00eda, Universidad Argentina de la Empresa, Buenos Aires, Argentina<br>10) corresponding author: osvaldo.chara@nottingham.ac.uk<br>*) These authors contributed equally</p>",
   "license": "bsd-3-clause",
   "upload_type": "software",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "creators": [
     {
       "name": "Aldecoa Rodrigo, Nicolás",
       "affiliation": "Instituto de Tecnología, Universidad Argentina de la Empresa, Buenos Aires, Argentina"
+    }
+  ],
+  "contributors": [
+    {
+      "name": "Borges, Augusto",
+      "type": "Researcher",
+      "affiliation": "Department of Physiology, Development and Neuroscience, University of Cambridge, Cambridge, CB2, UK"
+    },
+    {
+      "name": "Chara, Osvaldo",
+      "type": "Supervisor",
+      "affiliation": "School of Biosciences, University of Nottingham, Sutton Bonington Campus, Nottingham, LE12, UK; Instituto de Tecnología, Universidad Argentina de la Empresa, Buenos Aires, Argentina"
     }
   ],
   "keywords": [
@@ -22,7 +34,7 @@
     {
       "scheme": "url",
       "identifier": "https://github.com/nicolasaldecoa/StressNET",
-      "relation": "isSupplementTo"
+      "relation": "isIdenticalTo"
     }
   ],
   "access_right": "open",

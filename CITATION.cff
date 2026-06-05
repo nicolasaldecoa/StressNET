@@ -2,8 +2,8 @@ cff-version: 1.2.0
 message: "If you use this software, please cite it using the metadata below."
 type: software
 title: "StressNET: an adaptable deep-learning model for mechanical stress inference in tissues"
-version: 1.0.0
-date-released: 2026-05-31
+version: 1.0.1
+date-released: 2026-06-04
 license: BSD-3-Clause
 repository-code: "https://github.com/nicolasaldecoa/StressNET"
 url: "https://github.com/nicolasaldecoa/StressNET"
@@ -19,3 +19,31 @@ keywords:
   - tissue mechanics
   - biophysics
   - computational biology
+
+preferred-citation:
+  type: article
+  title: "StressNET: an adaptable deep-learning model for mechanical stress inference in tissues"
+  year: 2026
+  notes: "Associated research article (unpublished; DOI to be added once available). Nicolás Aldecoa Rodrigo and Augusto Borges contributed equally."
+  authors:
+    - family-names: Aldecoa Rodrigo
+      given-names: Nicolás
+      affiliation: "Instituto de Tecnología, Universidad Argentina de la Empresa, Buenos Aires, Argentina"
+    - family-names: Borges
+      given-names: Augusto
+      affiliation: "Department of Physiology, Development and Neuroscience, University of Cambridge, Cambridge, CB2, UK"
+    - family-names: Miranda-Rodriguez
+      given-names: Jerónimo R.
+      affiliation: "Instituto de Neurobiología, Universidad Nacional Autónoma de México (UNAM), Boulevard Juriquilla 3001, Juriquilla, México"
+    - family-names: Ventura
+      given-names: Guillherme
+      affiliation: "Research Institute for Molecular Pathology (IMP), Vienna, Austria"
+    - family-names: Sedzinski
+      given-names: Jakub
+      affiliation: "The Novo Nordisk Foundation Center for Stem Cell Medicine (reNEW), University of Copenhagen, Blegdamsvej 3B, 2200 Copenhagen, Denmark; Department of Biomedical Sciences, University of Copenhagen, Copenhagen, Denmark"
+    - family-names: López-Schier
+      given-names: Hernán
+      affiliation: "Division of Science, New York University Abu Dhabi, Saadiyat Island, United Arab Emirates"
+    - family-names: Chara
+      given-names: Osvaldo
+      affiliation: "School of Biosciences, University of Nottingham, Sutton Bonington Campus, Nottingham, LE12, UK; Instituto de Tecnología, Universidad Argentina de la Empresa, Buenos Aires, Argentina"
